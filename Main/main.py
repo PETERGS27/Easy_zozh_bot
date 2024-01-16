@@ -3,7 +3,7 @@ import config
 bot = telebot.TeleBot(config.TOKEN)
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, f'Здарвствуй, {message.from_user.first_name} этот бот создан для облегчения жизни ЗОЖников.\n\
+    bot.send_message(message.chat.id, f'Здравствуй, {message.from_user.first_name} этот бот создан для облегчения жизни ЗОЖников.\n\
 Вот список функций:\n\
 /start - Запуск бота\n\
 /help - Показать все команды\n\
