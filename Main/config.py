@@ -1,1 +1,4 @@
-TOKEN = '6698735791:AAFB2H-Zv5mYwvfH9NxGJE7hfh1-0fH7aKg'
+import os
+from dotenv import load_dotenv
+load_dotenv()
+TOKEN = os.getenv('api')
