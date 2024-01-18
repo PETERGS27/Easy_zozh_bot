@@ -23,4 +23,25 @@ def help(message):
 /help - Показать все команды\n\
 /getbzu - Рассчитать БЖУ')
 
+@bot.message_handler(commands=['getbzu'])
+def getbzu(message):
+    markup = types.InlineKeyboardMarkup()
+    menbtn = types.InlineKeyboardButton('Мужской', callback_data='men')
+    womenbtn = types.InlineKeyboardButton('Женский', callback_data='women')
+    markup.row(menbtn, womenbtn)
+    bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
+
+@bot.message_handler()
+def start_buttons(message):
+    if message.text.lower() == 'рассчитать бжу':
+        markup = types.InlineKeyboardMarkup()
+        menbtn = types.InlineKeyboardButton('Мужской', callback_data='men')
+        womenbtn = types.InlineKeyboardButton('Женский', callback_data='women')
+        markup.row(menbtn, womenbtn)
+        bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
+    elif message.text.lower() == 'показать все команды':
+        bot.send_message(message.chat.id, f'/start - Запуск бота\n\
+/help - Показать все команды\n\
+/getbzu - Рассчитать БЖУ')
+
 bot.infinity_polling()
