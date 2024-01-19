@@ -1,8 +1,7 @@
 import telebot
 import config
 from telebot import types
-
-bot = telebot.TeleBot(config.TOKEN)
+from config import bot
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -31,7 +30,22 @@ def getbzu(message):
     markup.row(menbtn, womenbtn)
     bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
 
-@bot.message_handler()
+@bot.callback_query_handler(func=lambda callback: True)
+def callback(callback):
+    if callback.data == 'men':
+        def ka(message):
+            markup = types.InlineKeyboardMarkup()
+            kabtn1 = types.InlineKeyboardButton('1,9 (тяжелый труд)', callback_data='ka1')
+            kabtn2 = types.InlineKeyboardButton('1,7 (несколько ежедневных тренировок)', callback_data='ka2')
+            kabtn3 = types.InlineKeyboardButton('1,63 (ежедневный тренинг)', callback_data='ka3')
+            kabtn4 = types.InlineKeyboardButton('1,55 (тренировки до пяти раз)', callback_data='ka4')
+            kabtn5 = types.InlineKeyboardButton('1,46 (активная работа)', callback_data='ka5')
+            kabtn6 = types.InlineKeyboardButton('1,4 (систематические занятия в спортзале 1-2 раза в неделю)', callback_data='ka6')
+            kabtn7 = types.InlineKeyboardButton('1,2 (активность отсутствует)', callback_data='ka7')
+            bot.send_message(message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
+    #elif callback.data == 'women':
+
+@bot.message_handler(content_types=['text'])
 def start_buttons(message):
     if message.text.lower() == 'рассчитать бжу':
         markup = types.InlineKeyboardMarkup()
