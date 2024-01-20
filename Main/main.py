@@ -2,6 +2,7 @@ import telebot
 import config
 from telebot import types
 from config import bot
+pol = ''
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -29,21 +30,35 @@ def getbzu(message):
     womenbtn = types.InlineKeyboardButton('Женский', callback_data='women')
     markup.row(menbtn, womenbtn)
     bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
+    #bot.register_next_step_handler(message, ka)
 
 @bot.callback_query_handler(func=lambda callback: True)
 def callback(callback):
     if callback.data == 'men':
-        def ka(message):
-            markup = types.InlineKeyboardMarkup()
-            kabtn1 = types.InlineKeyboardButton('1,9 (тяжелый труд)', callback_data='ka1')
-            kabtn2 = types.InlineKeyboardButton('1,7 (несколько ежедневных тренировок)', callback_data='ka2')
-            kabtn3 = types.InlineKeyboardButton('1,63 (ежедневный тренинг)', callback_data='ka3')
-            kabtn4 = types.InlineKeyboardButton('1,55 (тренировки до пяти раз)', callback_data='ka4')
-            kabtn5 = types.InlineKeyboardButton('1,46 (активная работа)', callback_data='ka5')
-            kabtn6 = types.InlineKeyboardButton('1,4 (систематические занятия в спортзале 1-2 раза в неделю)', callback_data='ka6')
-            kabtn7 = types.InlineKeyboardButton('1,2 (активность отсутствует)', callback_data='ka7')
-            bot.send_message(message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
-    #elif callback.data == 'women':
+        pol = 'men'
+    elif callback.data == 'women':
+        pol = 'women'
+
+print(pol)
+
+if pol == 'men' or 'women':
+    def ka(message):
+                markup = types.InlineKeyboardMarkup()
+                kabtn1 = types.InlineKeyboardButton('1,9 (тяжелый труд)', callback_data='ka1')
+                kabtn2 = types.InlineKeyboardButton('1,7 (несколько ежедневных тренировок)', callback_data='ka2')
+                kabtn3 = types.InlineKeyboardButton('1,63 (ежедневный тренинг)', callback_data='ka3')
+                kabtn4 = types.InlineKeyboardButton('1,55 (тренировки до пяти раз)', callback_data='ka4')
+                kabtn5 = types.InlineKeyboardButton('1,46 (активная работа)', callback_data='ka5')
+                kabtn6 = types.InlineKeyboardButton('1,4 (систематические занятия в спортзале 1-2 раза в неделю)', callback_data='ka6')
+                kabtn7 = types.InlineKeyboardButton('1,2 (активность отсутствует)', callback_data='ka7')
+                markup.row(kabtn1)
+                markup.row(kabtn2)
+                markup.row(kabtn3)
+                markup.row(kabtn4)
+                markup.row(kabtn5)
+                markup.row(kabtn6)
+                markup.row(kabtn7)
+                bot.send_message(message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
 def start_buttons(message):
@@ -53,6 +68,7 @@ def start_buttons(message):
         womenbtn = types.InlineKeyboardButton('Женский', callback_data='women')
         markup.row(menbtn, womenbtn)
         bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
+        #bot.register_next_step_handler(message, ka)
     elif message.text.lower() == 'показать все команды':
         bot.send_message(message.chat.id, f'/start - Запуск бота\n\
 /help - Показать все команды\n\
