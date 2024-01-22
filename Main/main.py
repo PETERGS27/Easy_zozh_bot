@@ -2,7 +2,6 @@ import telebot
 import config
 from telebot import types
 from config import bot
-pol = ''
 body_config = {}
 
 @bot.message_handler(commands=['start'])
@@ -71,6 +70,20 @@ def callback(callback):
         markup.row(kabtn6)
         markup.row(kabtn7)
         bot.send_message(callback.message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
+    elif callback.data == 'ka1':
+        body_config['ka'] = 1,9
+    elif callback.data == 'ka2':
+        body_config['ka'] = 1,7
+    elif callback.data == 'ka3':
+        body_config['ka'] = 1,63
+    elif callback.data == 'ka4':
+        body_config['ka'] = 1,55
+    elif callback.data == 'ka5':
+        body_config['ka'] = 1,46
+    elif callback.data == 'ka6':
+        body_config['ka'] = 1,4
+    elif callback.data == 'ka7':
+        body_config['ka'] = 1,2
 
 @bot.message_handler(content_types=['text'])
 def start_buttons(message):
