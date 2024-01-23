@@ -1,7 +1,7 @@
 import telebot
-import config
 from telebot import types
 from config import bot
+
 body_config = {}
 
 @bot.message_handler(commands=['start'])
@@ -71,19 +71,76 @@ def callback(callback):
         markup.row(kabtn7)
         bot.send_message(callback.message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
     elif callback.data == 'ka1':
-        body_config['ka'] = 1,9
+        body_config['ka'] = 1.9
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'ka2':
-        body_config['ka'] = 1,7
+        body_config['ka'] = 1.7
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'ka3':
-        body_config['ka'] = 1,63
+        body_config['ka'] = 1.63
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'ka4':
-        body_config['ka'] = 1,55
+        body_config['ka'] = 1.55
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'ka5':
-        body_config['ka'] = 1,46
+        body_config['ka'] = 1.46
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'ka6':
-        body_config['ka'] = 1,4
+        body_config['ka'] = 1.4
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'ka7':
-        body_config['ka'] = 1,2
+        body_config['ka'] = 1.2
+        vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
+        bot.register_next_step_handler(vozms, voz)
+    elif callback.data == 'cel1':
+        if body_config['pol'] == 'women':
+            bmr = 65.5 + 9.6 * body_config['ves'] + 1.8 * body_config['rost'] - 4.7 * body_config['voz']
+            kbmr = bmr * body_config['ka']
+            kal = kbmr * 0.9
+            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
+        elif body_config['pol'] == 'men':
+            bmr = 66 + 13.7 * body_config['ves'] + 5 * body_config['rost'] - 6.8 * body_config['voz']
+            kbmr = bmr * body_config['ka']
+            kal = kbmr * 0.9
+            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
+    elif callback.data == 'cel2':
+        if body_config['pol'] == 'women':
+            bmr = 65.5 + 9.6 * body_config['ves'] + 1.8 * body_config['rost'] - 4.7 * body_config['voz']
+            kbmr = bmr * body_config['ka']
+            kal = kbmr * 1.1
+            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
+        elif body_config['pol'] == 'men':
+            bmr = 66 + 13.7 * body_config['ves'] + 5 * body_config['rost'] - 6.8 * body_config['voz']
+            kbmr = bmr * body_config['ka']
+            kal = kbmr * 1.1
+            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
+
+def voz(message):
+    vozpr = message.text
+    body_config['voz'] = int(vozpr)
+    rostms = bot.send_message(message.chat.id, f'Введите свой рост(см): ')
+    bot.register_next_step_handler(rostms, rost)
+
+def rost(message):
+    rostpr = message.text
+    body_config['rost'] = int(rostpr)
+    vesms = bot.send_message(message.chat.id, f'Введите массу вашего тела в нормальных условиях(кг): ')
+    bot.register_next_step_handler(vesms, ves)
+
+def ves(message):
+    vespr = message.text
+    body_config['ves'] = int(vespr)
+    markup = types.InlineKeyboardMarkup()
+    celbtn1 = types.InlineKeyboardButton('Похудеть', callback_data='cel1')
+    celbtn2 = types.InlineKeyboardButton('Набрать вес', callback_data='cel2')
+    markup.row(celbtn1, celbtn2)
+    bot.send_message(message.chat.id, f'Цель твоя какова, ЗОЖник: ', reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
 def start_buttons(message):
