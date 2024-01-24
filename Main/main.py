@@ -31,7 +31,6 @@ def getbzu(message):
     womenbtn = types.InlineKeyboardButton('Женский', callback_data='women')
     markup.row(menbtn, womenbtn)
     bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
-    #bot.register_next_step_handler(message, ka)
 
 @bot.callback_query_handler(func=lambda callback: True)
 def callback(callback):
@@ -52,7 +51,7 @@ def callback(callback):
         markup.row(kabtn5)
         markup.row(kabtn6)
         markup.row(kabtn7)
-        bot.send_message(callback.message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
+        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
     elif callback.data == 'women':
         body_config['pol'] = 'women'
         markup = types.InlineKeyboardMarkup()
@@ -70,7 +69,7 @@ def callback(callback):
         markup.row(kabtn5)
         markup.row(kabtn6)
         markup.row(kabtn7)
-        bot.send_message(callback.message.chat.id, f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
+        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Итак, давай определим твой уровень активности: ', reply_markup=markup)
     elif callback.data == 'ka1':
         body_config['ka'] = 1.9
         vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
@@ -101,12 +100,12 @@ def callback(callback):
         bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'cel1':
         body_config['cel'] = 'phd'
-        kbzu()
-        bot.send_message(callback.message.chat.id, 'Вам нужно есть', body_config['kal'], 'каллорий')
+        kalmes = bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
+        bot.register_next_step_handler(kalmes, kalms)
     elif callback.data == 'cel2':
         body_config['cel'] = 'nbv'
-        kbzu()
-        bot.send_message(callback.message.chat.id, 'Вам нужно есть', body_config['kal'], 'каллорий')
+        kalmes = bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
+        bot.register_next_step_handler(kalmes, kalms)
 
 def voz(message):
     vozpr = message.text
@@ -129,6 +128,10 @@ def ves(message):
     markup.row(celbtn1, celbtn2)
     bot.send_message(message.chat.id, f'Цель твоя какова, ЗОЖник: ', reply_markup=markup)
 
+def kalms(message):
+    kbzu()
+    bot.send_message(message.chat.id, body_config['kal'], f'каллорий')
+
 @bot.message_handler(content_types=['text'])
 def start_buttons(message):
     if message.text.lower() == 'рассчитать бжу':
@@ -137,7 +140,6 @@ def start_buttons(message):
         womenbtn = types.InlineKeyboardButton('Женский', callback_data='women')
         markup.row(menbtn, womenbtn)
         bot.send_message(message.chat.id, f'Итак, пользователь, {message.from_user.first_name} назови свой пол:', reply_markup=markup)
-        #bot.register_next_step_handler(message, ka)
     elif message.text.lower() == 'показать все команды':
         bot.send_message(message.chat.id, f'/start - Запуск бота\n\
 /help - Показать все команды\n\
