@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 from config import bot
+import kbzu
 
 body_config = {}
 
@@ -99,27 +100,13 @@ def callback(callback):
         vozms = bot.send_message(callback.message.chat.id, f'Введите свой возраст: ')
         bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'cel1':
-        if body_config['pol'] == 'women':
-            bmr = 65.5 + 9.6 * body_config['ves'] + 1.8 * body_config['rost'] - 4.7 * body_config['voz']
-            kbmr = bmr * body_config['ka']
-            kal = kbmr * 0.9
-            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
-        elif body_config['pol'] == 'men':
-            bmr = 66 + 13.7 * body_config['ves'] + 5 * body_config['rost'] - 6.8 * body_config['voz']
-            kbmr = bmr * body_config['ka']
-            kal = kbmr * 0.9
-            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
+        body_config['cel'] = 'phd'
+        kbzu()
+        bot.send_message(callback.message.chat.id, 'Вам нужно есть', body_config['kal'], 'каллорий')
     elif callback.data == 'cel2':
-        if body_config['pol'] == 'women':
-            bmr = 65.5 + 9.6 * body_config['ves'] + 1.8 * body_config['rost'] - 4.7 * body_config['voz']
-            kbmr = bmr * body_config['ka']
-            kal = kbmr * 1.1
-            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
-        elif body_config['pol'] == 'men':
-            bmr = 66 + 13.7 * body_config['ves'] + 5 * body_config['rost'] - 6.8 * body_config['voz']
-            kbmr = bmr * body_config['ka']
-            kal = kbmr * 1.1
-            #bot.send_message(callback.message.chat.id, f'Вам требуется есть:', kal,f'колорий в день')
+        body_config['cel'] = 'nbv'
+        kbzu()
+        bot.send_message(callback.message.chat.id, 'Вам нужно есть', body_config['kal'], 'каллорий')
 
 def voz(message):
     vozpr = message.text
