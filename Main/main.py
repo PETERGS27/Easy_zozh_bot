@@ -99,12 +99,16 @@ def callback(callback):
         bot.register_next_step_handler(vozms, voz)
     elif callback.data == 'cel1':
         body_config['cel'] = 'phd'
-        kalmes = bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
-        bot.register_next_step_handler(kalmes, kalms)
+        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
+        from kbzu import kalories
+        kal = kalories(body_config)
+        bot.send_message(callback.message.chat.id, f'{kal} каллорий')
     elif callback.data == 'cel2':
         body_config['cel'] = 'nbv'
-        kalmes = bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
-        bot.register_next_step_handler(kalmes, kalms)
+        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
+        from kbzu import kalories
+        kal = kalories(body_config)
+        bot.send_message(callback.message.chat.id, f'{kal} каллорий')
 
 def voz(message):
     vozpr = message.text
@@ -126,12 +130,6 @@ def ves(message):
     celbtn2 = types.InlineKeyboardButton('Набрать вес', callback_data='cel2')
     markup.row(celbtn1, celbtn2)
     bot.send_message(message.chat.id, f'Цель твоя какова, ЗОЖник: ', reply_markup=markup)
-
-def kalms(message):
-    from kbzu import kalkbzu
-    kal = kalkbzu()
-    print(kal)
-    bot.send_message(message.chat.id, kal, f'каллорий')
 
 @bot.message_handler(content_types=['text'])
 def start_buttons(message):

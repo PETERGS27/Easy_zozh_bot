@@ -1,21 +1,23 @@
-from regkbzu import ves, rost, voz, ka, bc
-
-def kalkbzu():
-    if bc['pol'] == 'men':
+def kalories(x):
+    ves = int(x['ves'])
+    rost = int(x['rost'])
+    voz = int(x['voz'])
+    ka = float(x['ka'])
+    if x['pol'] == 'men':
         bmr = 10 * ves + 6.25 * rost - 5 * voz + 5
         kbmr = bmr * ka
-        if bc['cel'] == 'phd':
+        if x['cel'] == 'phd':
             kal = kbmr * 0.9
             return kal
-        elif bc['cel'] == 'nbv':
+        elif x['cel'] == 'nbv':
             kal = kbmr * 1.1
             return kal
-    elif bc['pol'] == 'women':
+    elif x['pol'] == 'women':
         bmr = 10 * ves + 6.25 * rost - 5 * voz - 161
         kbmr = bmr * ka
-        if bc['cel'] == 'phd':
+        if x['cel'] == 'phd':
             kal = kbmr * 0.9
             return kal
-        elif bc['cel'] == 'nbv':
+        elif x['cel'] == 'nbv':
             kal = kbmr * 1.1
             return kal
