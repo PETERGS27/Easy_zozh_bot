@@ -102,13 +102,13 @@ def callback(callback):
         bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
         from kbzu import kalories
         kal = kalories(body_config)
-        bot.send_message(callback.message.chat.id, f'{kal} каллорий')
+        bot.send_message(callback.message.chat.id, f'{kal} ккал')
     elif callback.data == 'cel2':
         body_config['cel'] = 'nbv'
         bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
         from kbzu import kalories
         kal = kalories(body_config)
-        bot.send_message(callback.message.chat.id, f'{kal} каллорий')
+        bot.send_message(callback.message.chat.id, f'{kal} ккал')
 
 def voz(message):
     vozpr = message.text
