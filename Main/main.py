@@ -1,7 +1,6 @@
 import telebot
 from telebot import types
 from config import bot
-import kbzu
 
 body_config = {}
 
@@ -129,8 +128,10 @@ def ves(message):
     bot.send_message(message.chat.id, f'Цель твоя какова, ЗОЖник: ', reply_markup=markup)
 
 def kalms(message):
-    kbzu()
-    bot.send_message(message.chat.id, body_config['kal'], f'каллорий')
+    from kbzu import kalkbzu
+    kal = kalkbzu()
+    print(kal)
+    bot.send_message(message.chat.id, kal, f'каллорий')
 
 @bot.message_handler(content_types=['text'])
 def start_buttons(message):
@@ -145,4 +146,4 @@ def start_buttons(message):
 /help - Показать все команды\n\
 /getbzu - Рассчитать БЖУ')
 
-bot.infinity_polling()
+bot.polling(none_stop=True)
