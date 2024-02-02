@@ -100,15 +100,35 @@ def callback(callback):
     elif callback.data == 'cel1':
         body_config['cel'] = 'phd'
         bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
-        from kbzu import kalories
-        kal = kalories(body_config)
+        from kbzu import kalories, belki, zhiri, uglevods
+        body_config['kal'] = kalories(body_config)
+        body_config['bel'] = belki(body_config)
+        body_config['zhir'] = zhiri(body_config)
+        body_config['ugli'] = uglevods(body_config)
+        kal = body_config['kal']
+        bel = body_config['bel']
+        zhir = body_config['zhir']
+        ugli = body_config['ugli']
         bot.send_message(callback.message.chat.id, f'{kal} ккал')
+        bot.send_message(callback.message.chat.id, f'{bel} гр белка')
+        bot.send_message(callback.message.chat.id, f'{zhir} гр жиров')
+        bot.send_message(callback.message.chat.id, f'{ugli} гр углеводов')
     elif callback.data == 'cel2':
         body_config['cel'] = 'nbv'
         bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.id, text=f'Вам необходимо есть: ')
-        from kbzu import kalories
-        kal = kalories(body_config)
+        from kbzu import kalories, belki, zhiri, uglevods
+        body_config['kal'] = kalories(body_config)
+        body_config['bel'] = belki(body_config)
+        body_config['zhir'] = zhiri(body_config)
+        body_config['ugli'] = uglevods(body_config)
+        kal = int(body_config['kal'])
+        bel = int(body_config['bel'])
+        zhir = int(body_config['zhir'])
+        ugli = int(body_config['ugli'])
         bot.send_message(callback.message.chat.id, f'{kal} ккал')
+        bot.send_message(callback.message.chat.id, f'{bel} гр белка')
+        bot.send_message(callback.message.chat.id, f'{zhir} гр жиров')
+        bot.send_message(callback.message.chat.id, f'{ugli} гр углеводов')
 
 def voz(message):
     vozpr = message.text

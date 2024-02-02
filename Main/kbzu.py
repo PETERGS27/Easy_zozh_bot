@@ -8,16 +8,41 @@ def kalories(x):
         kbmr = bmr * ka
         if x['cel'] == 'phd':
             kal = kbmr * 0.9
-            return kal
+            return int(kal)
         elif x['cel'] == 'nbv':
             kal = kbmr * 1.1
-            return kal
+            return int(kal)
     elif x['pol'] == 'women':
         bmr = 10 * ves + 6.25 * rost - 5 * voz - 161
         kbmr = bmr * ka
         if x['cel'] == 'phd':
             kal = kbmr * 0.9
-            return kal
+            return int(kal)
         elif x['cel'] == 'nbv':
             kal = kbmr * 1.1
-            return kal
+            return int(kal)
+
+def belki(x):
+    kal = x['kal']
+    if x['cel'] == 'phd':
+        bel = kal * 0.3
+        return int(bel)
+    elif x['cel'] == 'nbv':
+        bel = kal * 0.35
+        return int(bel)
+
+def zhiri(x):
+    kal = x['kal']
+    if x['cel'] == 'phd':
+        zhir = kal * 0.3
+        return int(zhir)
+    elif x['cel'] == 'nbv':
+        zhir = kal * 0.25
+        return int(zhir)
+
+def uglevods(x):
+    kal = int(x['kal'])
+    bel = int(x['bel'])
+    zhir = int(x['zhir'])
+    ugli = kal - bel - zhir
+    return int(ugli)
